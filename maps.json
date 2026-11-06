@@ -1,0 +1,178 @@
+{
+  "maps": {
+    "easy": [
+      "T2S.G",
+      "HHH.."
+    ],
+    "medium": [
+      "T21....",
+      "HHH.#H.",
+      "S..1.2G",
+      "#.##.#."
+    ],
+    "hard": [
+      "T1.2..G.",
+      "H#H#H#.#",
+      "S.1.2.1.",
+      "#.#.#.#.",
+      "T2.H.1.."
+    ]
+  },
+  "configs": {
+    "default": {
+      "step_penalty": -1.0,
+      "goal_reward": 100.0,
+      "fall_penalty": -100.0,
+      "invalid_penalty": -1.0,
+      "treasure_reward": 20.0,
+      "slip_prob": 0.0,
+      "max_steps": 200,
+      "use_repair_kit": true,
+      "require_all_treasures": true,
+      "random_treasure": false
+    }
+  },
+  "q_learning": {
+    "default": {
+      "alpha": 0.1,
+      "gamma": 0.99,
+      "eps_start": 1.0,
+      "eps_end": 0.05,
+      "eps_decay_frac": 0.6
+    },
+    "easy": {
+      "episodes": 3000
+    },
+    "medium": {
+      "episodes": 30000
+    },
+    "hard": {
+      "episodes": 150000
+    }
+  },
+  "variants_map": "medium",
+  "variants": {
+    "base (co kit, bat buoc nhat kho bau)": {},
+    "slip_0.1": {
+      "slip_prob": 0.1
+    },
+    "co kit, kho bau tuy chon": {
+      "require_all_treasures": false
+    },
+    "khong kit, kho bau tuy chon": {
+      "use_repair_kit": false,
+      "require_all_treasures": false
+    }
+  },
+  "rewards_exp": {
+    "map": "medium",
+    "base": {
+      "slip_prob": 0.1
+    },
+    "configs": {
+      "default": {},
+      "fall_cheap (fall=-10)": {
+        "fall_penalty": -10.0
+      },
+      "step_cheap (step=-0.1)": {
+        "step_penalty": -0.1
+      },
+      "treasure_low_optional (5)": {
+        "require_all_treasures": false,
+        "treasure_reward": 5.0
+      },
+      "treasure_high_optional (150)": {
+        "require_all_treasures": false,
+        "treasure_reward": 150.0
+      }
+    }
+  },
+  "failure_exp": {
+    "map": "hard",
+    "scenarios": {
+      "baseline": {},
+      "eps_decay_qua_nhanh": {
+        "q": {
+          "eps_decay_frac": 0.05
+        }
+      },
+      "alpha_cao (0.5)": {
+        "q": {
+          "alpha": 0.5
+        }
+      },
+      "it_episode (x0.2)": {
+        "q": {
+          "episodes_mult": 0.2
+        }
+      },
+      "slip_0.1": {
+        "env": {
+          "slip_prob": 0.1
+        }
+      }
+    }
+  },
+  "scenarios": {
+    "S01_noT_slip0": {
+      "treasure": "none",
+      "slip_prob": 0.0
+    },
+    "S02_noT_slip0.1": {
+      "treasure": "none",
+      "slip_prob": 0.1
+    },
+    "S03_fixReq_slip0": {
+      "treasure": "fixed",
+      "require": true,
+      "slip_prob": 0.0
+    },
+    "S04_fixOpt_slip0": {
+      "treasure": "fixed",
+      "require": false,
+      "slip_prob": 0.0
+    },
+    "S05_rndReq_slip0": {
+      "treasure": "random",
+      "require": true,
+      "slip_prob": 0.0
+    },
+    "S06_rndOpt_slip0": {
+      "treasure": "random",
+      "require": false,
+      "slip_prob": 0.0
+    },
+    "S07_fixReq_slip0.1": {
+      "treasure": "fixed",
+      "require": true,
+      "slip_prob": 0.1
+    },
+    "S08_fixOpt_slip0.1": {
+      "treasure": "fixed",
+      "require": false,
+      "slip_prob": 0.1
+    },
+    "S09_rndReq_slip0.1": {
+      "treasure": "random",
+      "require": true,
+      "slip_prob": 0.1
+    },
+    "S10_rndOpt_slip0.1": {
+      "treasure": "random",
+      "require": false,
+      "slip_prob": 0.1
+    }
+  },
+  "run_all": {
+    "episodes": {
+      "easy": 4000,
+      "medium": 40000,
+      "hard": 150000
+    },
+    "theta": 1e-06,
+    "tpi_k": 5,
+    "eval_eps": 300,
+    "ckpt_eps": 30,
+    "mc_alpha": null
+  }
+}
